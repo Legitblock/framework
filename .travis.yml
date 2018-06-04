@@ -118,7 +118,7 @@ matrix:
       env:
         - KUBE_VERSION=v1.8.0
         - DO_JWT_DL=n
-        - VERBOSITY=10
+        - VERBOSITY=18
         - CHANGE_MINIKUBE_NONE_USER=true
         - MINIKUBE_VERSION=v0.25.2
         - USE_VOX=n
