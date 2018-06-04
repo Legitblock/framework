@@ -136,6 +136,7 @@ matrix:
         directories:
           - /home/travis/.minikube
 
+
 before_script:
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash .ci/linux_before_install.sh; fi
 - bash -l -c "echo PATH=$HOME/.transmute/bin:$PATH >> $HOME/.bashrc"
