@@ -97,7 +97,7 @@ squawk 5 "Install helm"
 helm init --service-account tiller
 $TRANSMUTE_REPO/w8s/ready.w8 tiller-deploy kube-system
 
-sleep 5
+sleep 1
 kubectl get pods -n kube-system
 
 squawk 5 "Ganache-cli"
