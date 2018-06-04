@@ -85,7 +85,7 @@ showpod () {
   do
     kubectl get pods --namespace $2
     countone=`expr $countone + 1`
-    sleep 3
+    sleep 2
   done
 }
 
