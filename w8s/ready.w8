@@ -62,9 +62,12 @@ qready () {
     RESULT=$(kubectl get --namespace=$2 pods/$1 -o json 2>/dev/null | jq -r \
      '. | select(.status.phase = ([ .status.conditions[] | select(.type == "Ready" and .state == true) ] | length ) == 1 ) | .metadata.namespace + "/" + .metadata.name' )
     if [ "$RESULT" ]; then
+      NOT_READY_PODS=$(kubectl get pods -n $2 |grep $1|awk '{print $2}'|cut -f1,2 -d'/' --output-delimiter=' '|awk '{print $2 " - " $1}'|bc)
+      if [[ $NOT_READY_PODS -eq 0 ]]
         echo '.'
         squawk 1 "$1 is now ready"
         break
+      fi
     fi
     if [ "$VERBOSITY" -ge 14 ] ; then
       squawk 3 "$2"
