@@ -114,4 +114,4 @@ main () {
   done
 }
 
-main $@
+time main $@
