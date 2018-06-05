@@ -108,9 +108,9 @@ showpod () {
 main () {
   squawk 9 'Ready.w8'
   if [[ $EXCLUDE_POD ]]; then
-    KUBE_SELECTED_PODS=$(kubectl get pods --namespace=$2 2>/dev/null |awk '{print $1}'|grep $1 |tr '\n' ' ')
-  else
     KUBE_SELECTED_PODS=$(kubectl get pods --namespace=$2 2>/dev/null |awk '{print $1}'|grep $1 |grep -v $EXCLUDE_POD  |tr '\n' ' ')
+  else
+    KUBE_SELECTED_PODS=$(kubectl get pods --namespace=$2 2>/dev/null |awk '{print $1}'|grep $1 |tr '\n' ' ')
   fi
   for this_pod in $KUBE_SELECTED_PODS; do
     squawk 9 "testing $this_pod  in the namespace $2 for running and readiness"
