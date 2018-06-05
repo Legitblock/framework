@@ -74,7 +74,7 @@ add_line_to()
 
 # Wait for kubectl and kube-dns to be initialized
 $TRANSMUTE_REPO/w8s/kubectl.w8
-USE_STRICT_W8=true $TRANSMUTE_REPO/w8s/ready.w8 kube-dns kube-system
+$TRANSMUTE_REPO/w8s/ready.w8 kube-dns kube-system
 
 sleep 5
 
