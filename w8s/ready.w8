@@ -62,18 +62,28 @@ qready () {
     RESULT=$(kubectl get --namespace=$2 pods/$1 -o json 2>/dev/null | jq -r \
      '. | select(.status.phase = ([ .status.conditions[] | select(.type == "Ready" and .state == true) ] | length ) == 1 ) | .metadata.namespace + "/" + .metadata.name' )
     if [ "$RESULT" ]; then
-  # Calculate the number of pods not ready
-  # by awking out the ready column which usually looks like '1/1'
-  # but is sometimes '0/1' or '1/3', etc
-  # Then use cut to split that field using '/' as a delmiter
-  # Next use awk again to transpose the two numbers and stick a ' - ' in between them
-  # And feed the whole string to `bc` which can do some basic caclulcations on the cli
-  # If the answer is zero and the above has passed then I am fairly certain this pod is up and ready
-      NOT_READY_PODS=$(kubectl get pods -n $2 |grep $1|awk '{print $2}'|cut -f1,2 -d'/' --output-delimiter=' '|awk '{print $2 " - " $1}'|bc)
-      if [[ $NOT_READY_PODS -eq 0 ]]; then
-        echo '.'
-        squawk 1 "$1 is now ready"
-        break
+    # Calculate the number of pods not ready
+    # by awking out the ready column which usually looks like '1/1'
+    # but is sometimes '0/1' or '1/3', etc
+    # Then use cut to split that field using '/' as a delimiter
+    # Next use awk again to transpose the two numbers and stick a ' - ' in between them
+    # And feed the whole string to `bc` which can do some basic caclulcations on the cli
+    # If the answer is zero and the above has passed then I am fairly certain this pod is up and ready
+      if [[ $USE_STRICT_W8 == 'true' ]]; then
+          echo strict
+        NOT_READY_PODS=$(kubectl get pods -n $2 |grep $1|awk '{print $2}'|cut -f1,2 -d'/' --output-delimiter=' '|awk '{print $2 " - " $1}'|bc)
+        if [[ $NOT_READY_PODS -eq 0 ]]; then
+          echo '.'
+          squawk 1 "$1 is now ready"
+          break
+        fi
+      else
+        READY_PODS=$(kubectl get pods -n $2 |grep $1|awk '{print $2}'|cut -f1,2 -d'/' --output-delimiter=' '|awk '{print $1}')
+        if [[ $READY_PODS -gt 0 ]]; then
+          echo '.'
+          squawk 1 "$1 is now ready"
+          break
+        fi
       fi
     fi
     if [ "$VERBOSITY" -ge 14 ] ; then

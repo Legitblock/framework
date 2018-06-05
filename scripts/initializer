@@ -74,7 +74,7 @@ add_line_to()
 
 # Wait for kubectl and kube-dns to be initialized
 $TRANSMUTE_REPO/w8s/kubectl.w8
-$TRANSMUTE_REPO/w8s/ready.w8 kube-dns kube-system
+USE_STRICT_W8=true $TRANSMUTE_REPO/w8s/ready.w8 kube-dns kube-system
 
 sleep 5
 
@@ -95,7 +95,8 @@ kubectl get pods
 
 squawk 5 "Install helm"
 helm init --service-account tiller
-$TRANSMUTE_REPO/w8s/ready.w8 tiller-deploy kube-system
+
+USE_STRICT_W8=true $TRANSMUTE_REPO/w8s/ready.w8 tiller-deploy kube-system
 
 sleep 1
 kubectl get pods -n kube-system
