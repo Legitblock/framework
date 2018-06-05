@@ -87,6 +87,7 @@ matrix:
       cache:
         directories:
           - /home/travis/.minikube
+          - /home/travis/.local
     - os: linux
       dist: trusty
       sudo: required
@@ -111,6 +112,7 @@ matrix:
       cache:
         directories:
           - /home/travis/.minikube
+          - /home/travis/.local
     - os: linux
       dist: trusty
       sudo: required
@@ -135,6 +137,7 @@ matrix:
       cache:
         directories:
           - /home/travis/.minikube
+          - /home/travis/.local
 
 
 before_script:
