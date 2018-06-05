@@ -115,12 +115,6 @@ main () {
     if [ "$VERBOSITY" -ge 15 ] ; then
       showpod $this_pod $2
     fi
-#    if [ "$VERBOSITY" -ge 16 ] ; then
-#      kubectl describe pod $this_pod -n $2
-#    fi
-#    if [ "$VERBOSITY" -ge 17 ] ; then
-#      kubectl logs $this_pod -n $2
-#    fi
   done
 }
 
