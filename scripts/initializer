@@ -137,7 +137,7 @@ helm install stable/kong --name gateway
 
 squawk 5 "spin up"
 $TRANSMUTE_REPO/w8s/ready.w8 gateway-postgresql default
-$TRANSMUTE_REPO/w8s/ready.w8 gateway-kong default
+EXCLUDE_POD=gateway-kong-migration $TRANSMUTE_REPO/w8s/ready.w8 gateway-kong default
 export MINIKUBE_IP=$(minikube ip)
 export KONG_ADMIN_URL=$(PATH=$HOME/.transmute/bin:$PATH minikube service gateway-kong-admin --url | sed 's,http://,https://,g')
 export KONG_PROXY_URL=$(PATH=$HOME/.transmute/bin:$PATH minikube service gateway-kong-proxy --url | sed 's,http://,https://,g')
