@@ -1,10 +1,9 @@
 {
   "name": "transmute-cli",
-  "version": "0.2.1",
+  "version": "0.2.3",
   "description": "transmute cli",
   "scripts": {
-    "build": "babel src -d lib",
-    "transmute": "npm run build && ./lib/index.js",
+    "transmute": "./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "docs": "jsdoc -c jsdoc.json"
   },
@@ -12,12 +11,14 @@
     "transmute"
   ],
   "author": "Transmute",
-  "license": "ISC",
+  "license": "MIT",
   "files": [
-    "lib"
+    "src",
+    "scripts",
+    "components"
   ],
   "bin": {
-    "transmute": "./lib/index.js"
+    "transmute": "./src/index.js"
   },
   "dependencies": {
     "form-urlencoded": "^2.0.4",
@@ -29,11 +30,10 @@
     "url-parse": "^1.4.0",
     "vorpal": "^1.12.0",
     "vorpal-log": "^1.1.0",
-    "vorpal-tour": "0.0.5"
+    "vorpal-tour": "0.0.5",
+    "winston": "^3.0.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
     "docdash": "^0.4.0",
     "jsdoc": "^3.5.5"
   }
